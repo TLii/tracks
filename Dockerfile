@@ -1,3 +1,10 @@
+FROM debian:stable-slim as linefix
+RUN apt-get update && apt-get install -y dos2unix
+COPY . /build
+WORKDIR /build
+RUN find . -type f -print0 | xargs -0 dos2unix
+
+
 FROM ruby:2.7.1
 
 # throw errors if Gemfile has been modified since Gemfile.lock
@@ -7,7 +14,7 @@ WORKDIR /app
 
 RUN touch /etc/app-env
 
-COPY Gemfile* /app/
+COPY --from=linefix /build/Gemfile* /app/
 RUN gem install bundler
 RUN bundle install --jobs 4
 
@@ -17,14 +24,14 @@ RUN apt-get update && apt-get install -y yarn
 
 RUN mkdir /app/log
 
-COPY . /app/
+COPY  --from=linefix /build/ /app/
 COPY config/database.docker.yml /app/config/database.yml
 COPY config/site.docker.yml /app/config/site.yml
 
-RUN RAILS_ENV=production bundle exec rake assets:precompile
+RUN bundle exec rake assets:precompile
 
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
 
 EXPOSE 3000
 
-CMD ["rails", "server", "-b", "0.0.0.0"]
+CMD ["bin/rails", "server", "-b", "0.0.0.0"]
