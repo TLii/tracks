@@ -6,8 +6,15 @@ RUN find . -type f -print0 | xargs -0 dos2unix
 
 
 FROM ruby:2.7.1
-
-# throw errors if Gemfile has been modified since Gemfile.lock
+ENV DATABASE_HOST=localhost \
+    DATABASE_USERNAME=tracks \
+    DATABASE_NAME=tracks \
+    DATABASE_PASSWORD=changeme \
+    DATABASE_TYPE=mysql2 \
+    DATABASE_PORT=3306 \
+    DATABASE_ENCODING=utf8 \
+    RAILS_ENV=production
+    # throw errors if Gemfile has been modified since Gemfile.lock
 RUN bundle config --global frozen 1
 
 WORKDIR /app
