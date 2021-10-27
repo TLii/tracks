@@ -21,7 +21,7 @@ gem 'acts_as_list'
 gem 'bcrypt', '~> 3.1.16'
 gem 'htmlentities'
 gem 'paperclip'
-gem 'puma', '~> 5.4'
+gem 'puma', '~> 5.5'
 gem 'rails_autolink'
 gem 'RedCloth'
 gem 'sanitize', '~> 6.0'
@@ -52,7 +52,7 @@ end
 group :development, :test do
   gem 'byebug'
   gem 'listen'
-  gem 'rubocop', '~> 1.20', require: false
+  gem 'rubocop', '~> 1.22', require: false
 end
 
 group :test do
