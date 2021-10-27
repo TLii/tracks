@@ -35,7 +35,8 @@ COPY  --from=linefix /build/ /app/
 COPY config/database.docker.yml /app/config/database.yml
 COPY config/site.docker.yml /app/config/site.yml
 
-RUN bundle exec rake assets:precompile
+RUN bundle exec rake assets:precompile\
+    ln -s /app/log/production.log /dev/stdout \
 
 ENTRYPOINT ["/app/docker-entrypoint.sh"]
 
