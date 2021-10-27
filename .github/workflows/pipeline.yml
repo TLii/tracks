@@ -34,7 +34,7 @@ jobs:
         # Target Docker registry
         registry: ${{ secrets.REGISTRY_ADDRESS }}
         # Location of Dockerfile, if not Dockerfile in root directory
-        dockerfile: Dockerfile.k8s # optional, default is Dockerfile
+        dockerfile: Dockerfile # optional, default is Dockerfile
         # Docker build arguments passed via --build-arg
         #buildArgs: # optional
         # Docker build labels passed via --label
